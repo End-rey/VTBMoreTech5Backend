@@ -1,4 +1,4 @@
-module github.com/evrone/go-clean-template
+module github.com/End-rey/VTBMoreTech5Backend
 
 go 1.17
 
