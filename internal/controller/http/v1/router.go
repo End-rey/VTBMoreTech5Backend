@@ -10,9 +10,9 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	// Swagger docs.
-	_ "github.com/evrone/go-clean-template/docs"
-	"github.com/evrone/go-clean-template/internal/usecase"
-	"github.com/evrone/go-clean-template/pkg/logger"
+	_ "github.com/End-rey/VTBMoreTech5Backend/docs"
+	"github.com/End-rey/VTBMoreTech5Backend/internal/usecase"
+	"github.com/End-rey/VTBMoreTech5Backend/pkg/logger"
 )
 
 // NewRouter -.
@@ -28,8 +28,7 @@ func NewRouter(handler *gin.Engine, l logger.Interface, t usecase.Translation) {
 	handler.Use(gin.Recovery())
 
 	// Swagger
-	swaggerHandler := ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, "DISABLE_SWAGGER_HTTP_HANDLER")
-	handler.GET("/swagger/*any", swaggerHandler)
+	handler.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// K8s probe
 	handler.GET("/healthz", func(c *gin.Context) { c.Status(http.StatusOK) })
