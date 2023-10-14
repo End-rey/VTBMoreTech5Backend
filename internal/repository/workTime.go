@@ -15,7 +15,7 @@ func NewWorkTimePostgres(db *gorm.DB) *WorkTimePostgres {
 	return &WorkTimePostgres{db: db}
 }
 
-func (r *WorkTimePostgres) Create(workTime entity.WorksTime) (int64, error) {
+func (r *WorkTimePostgres) Create(workTime entity.WorksTimeOffice) (int64, error) {
 	result := r.db.Create(&workTime)
 	if result.Error != nil {
 		return 0, fmt.Errorf("WorkTimePostgres - Create - r.db.Create: %w", result.Error)
@@ -24,8 +24,8 @@ func (r *WorkTimePostgres) Create(workTime entity.WorksTime) (int64, error) {
 	return workTime.ID, nil
 }
 
-func (r *WorkTimePostgres) GetAll() ([]entity.WorksTime, error) {
-	var workTimes []entity.WorksTime
+func (r *WorkTimePostgres) GetAll() ([]entity.WorksTimeOffice, error) {
+	var workTimes []entity.WorksTimeOffice
 
 	result := r.db.Find(&workTimes)
 	if result.Error != nil {
@@ -35,8 +35,8 @@ func (r *WorkTimePostgres) GetAll() ([]entity.WorksTime, error) {
 	return workTimes, nil
 }
 
-func (r *WorkTimePostgres) GetById(workTimeId int64) (entity.WorksTime, error) {
-	var workTime entity.WorksTime
+func (r *WorkTimePostgres) GetById(workTimeId int64) (entity.WorksTimeOffice, error) {
+	var workTime entity.WorksTimeOffice
 
 	result := r.db.First(&workTime, workTimeId)
 	if result.Error != nil {
@@ -46,8 +46,8 @@ func (r *WorkTimePostgres) GetById(workTimeId int64) (entity.WorksTime, error) {
 	return workTime, nil
 }
 
-func (r *WorkTimePostgres) Update(workTimeId int64, inputworkTime entity.WorksTime) error {
-	var workTime entity.WorksTime
+func (r *WorkTimePostgres) Update(workTimeId int64, inputworkTime entity.WorksTimeOffice) error {
+	var workTime entity.WorksTimeOffice
 
 	result := r.db.First(&workTime, workTimeId)
 	if result.Error != nil {
@@ -63,7 +63,7 @@ func (r *WorkTimePostgres) Update(workTimeId int64, inputworkTime entity.WorksTi
 }
 
 func (r *WorkTimePostgres) Delete(workTimeId int64) error {
-	result := r.db.Delete(&entity.WorksTime{}, workTimeId)
+	result := r.db.Delete(&entity.WorksTimeOffice{}, workTimeId)
 	if result.Error != nil {
 		return fmt.Errorf("WorkTimePostgres - Delete - r.db.Delete: %w", result.Error)
 	}

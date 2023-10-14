@@ -22,10 +22,10 @@ type AtmRepo interface {
 }
 
 type ChartRepo interface {
-	Create(chart entity.Chart) (int64, error)
-	GetAll() ([]entity.Chart, error)
-	GetById(chartId int64) (entity.Chart, error)
-	Update(chartId int64, inputChart entity.Chart) error
+	Create(chart entity.ChartsOffices) (int64, error)
+	GetAll() ([]entity.ChartsOffices, error)
+	GetById(chartId int64) (entity.ChartsOffices, error)
+	Update(chartId int64, inputChart entity.ChartsOffices) error
 	Delete(chartId int64) error
 }
 
@@ -38,10 +38,10 @@ type ServiceRepo interface {
 }
 
 type WorkTimeRepo interface {
-	Create(workTime entity.WorksTime) (int64, error)
-	GetAll() ([]entity.WorksTime, error)
-	GetById(workTimeId int64) (entity.WorksTime, error)
-	Update(workTimeId int64, inputWorkTime entity.WorksTime) error
+	Create(workTime entity.WorksTimeOffice) (int64, error)
+	GetAll() ([]entity.WorksTimeOffice, error)
+	GetById(workTimeId int64) (entity.WorksTimeOffice, error)
+	Update(workTimeId int64, inputWorkTime entity.WorksTimeOffice) error
 	Delete(workTimeId int64) error
 }
 

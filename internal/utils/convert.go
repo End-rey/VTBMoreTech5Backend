@@ -54,7 +54,7 @@ func AtmToDTO(atm entity.Atm) dto.AtmDTO {
 	return atmDTO
 }
 
-func ChartsToDTO (charts []entity.Chart) []dto.ChartDTO {
+func ChartsToDTO (charts []entity.ChartsOffices) []dto.ChartDTO {
 	mapWeekDays := make(map[string][24]int)
 	for _, chart := range charts {
 		if _, ok := mapWeekDays[chart.WeeksDay]; !ok {
@@ -88,7 +88,7 @@ func ServiceToDTO(service entity.Service) dto.ServiceDTO {
 	}
 }
 
-func WorksTimeToDTO(worksTime entity.WorksTime) dto.WorkTimeDTO {
+func WorksTimeToDTO(worksTime entity.WorksTimeOffice) dto.WorkTimeDTO {
 	return dto.WorkTimeDTO{
 		WeeksDay: worksTime.WeeksDay,
     	WorkTimeStart: worksTime.WorkTimeStart,

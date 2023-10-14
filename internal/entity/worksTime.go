@@ -5,16 +5,14 @@ import (
     "time"
 )
 
-type WorksTime struct {
+type WorksTimeOffice struct {
     ID          int64 `gorm:"primaryKey"`
-    IDOffice    int64
+    OfficeID    int64
     WeeksDay    string
     WorkTimeStart time.Time `gorm:"type:time;not null"`
     WorkTimeEnd   time.Time `gorm:"type:time;not null"`
+    LunchTimeStart time.Time `gorm:"type:time"`
+	LunchTimeEnd   time.Time `gorm:"type:time"`
     IsLegal     bool
-    Office      Office `gorm:"foreignKey:IDOffice"`
-}
-
-func (wto *WorksTime) TableName() string {
-    return "works_time_offices"
+    Office      Office `gorm:"foreignkey:OfficeID"`
 }

@@ -28,9 +28,13 @@ swag-v1: ### swag init
 	swag init -g internal/handler/handler.go
 .PHONY: swag-v1
 
-run: swag-v1 ### swag run
+run-swag-migrate: swag-v1 ### swag run
 	go mod tidy && go mod download && \
 	go run -tags migrate ./cmd/app
+.PHONY: run-swag-migrate
+
+run:
+	go run ./cmd/app/
 .PHONY: run
 
 docker-rm-volume: ### remove docker volume

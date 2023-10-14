@@ -15,7 +15,7 @@ func NewChartPostgres(db *gorm.DB) *ChartPostgres {
 	return &ChartPostgres{db: db}
 }
 
-func (r *ChartPostgres) Create(chart entity.Chart) (int64, error) {
+func (r *ChartPostgres) Create(chart entity.ChartsOffices) (int64, error) {
 	result := r.db.Create(&chart)
 	if result.Error != nil {
 		return 0, fmt.Errorf("ChartPostgres - Create - r.db.Create: %w", result.Error)
@@ -24,8 +24,8 @@ func (r *ChartPostgres) Create(chart entity.Chart) (int64, error) {
 	return chart.ID, nil
 }
 
-func (r *ChartPostgres) GetAll() ([]entity.Chart, error) {
-	var charts []entity.Chart
+func (r *ChartPostgres) GetAll() ([]entity.ChartsOffices, error) {
+	var charts []entity.ChartsOffices
 
 	result := r.db.Find(&charts)
 	if result.Error != nil {
@@ -35,8 +35,8 @@ func (r *ChartPostgres) GetAll() ([]entity.Chart, error) {
 	return charts, nil
 }
 
-func (r *ChartPostgres) GetById(chartId int64) (entity.Chart, error) {
-	var chart entity.Chart
+func (r *ChartPostgres) GetById(chartId int64) (entity.ChartsOffices, error) {
+	var chart entity.ChartsOffices
 
 	result := r.db.First(&chart, chartId)
 	if result.Error != nil {
@@ -46,8 +46,8 @@ func (r *ChartPostgres) GetById(chartId int64) (entity.Chart, error) {
 	return chart, nil
 }
 
-func (r *ChartPostgres) Update(chartId int64, inputchart entity.Chart) error {
-	var chart entity.Chart
+func (r *ChartPostgres) Update(chartId int64, inputchart entity.ChartsOffices) error {
+	var chart entity.ChartsOffices
 
 	result := r.db.First(&chart, chartId)
 	if result.Error != nil {
@@ -63,7 +63,7 @@ func (r *ChartPostgres) Update(chartId int64, inputchart entity.Chart) error {
 }
 
 func (r *ChartPostgres) Delete(chartId int64) error {
-	result := r.db.Delete(&entity.Chart{}, chartId)
+	result := r.db.Delete(&entity.ChartsOffices{}, chartId)
 	if result.Error != nil {
 		return fmt.Errorf("ChartPostgres - Delete - r.db.Delete: %w", result.Error)
 	}

@@ -5,15 +5,11 @@ import (
     "time"
 )
 
-type Chart struct {
+type ChartsOffices struct {
     ID         int64 `gorm:"primaryKey"`
-    IDOffice   int64
+    OfficeID   int64
     WeeksDay   string
     ChartsTime *time.Time `gorm:"type:time"`
     Chart      int
-    Office     Office `gorm:"foreignKey:IDOffice"`
-}
-
-func (co *Chart) TableName() string {
-    return "charts_offices"
+    Office     Office `gorm:"foreignkey:OfficeID"`
 }

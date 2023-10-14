@@ -31,6 +31,8 @@ func (r *OfficePostgres) GetAll() ([]entity.Office, error) {
 	if result.Error != nil {
 		return nil, fmt.Errorf("OfficePostgres - GetAll - r.db.Find: %w", result.Error)
 	}
+	
+	fmt.Printf("offices %+v", offices)
 
 	return offices, nil
 }
