@@ -7,13 +7,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/gin-gonic/gin"
-
 	"github.com/End-rey/VTBMoreTech5Backend/config"
-	v1 "github.com/End-rey/VTBMoreTech5Backend/internal/controller/http/v1"
-	"github.com/End-rey/VTBMoreTech5Backend/internal/usecase"
-	"github.com/End-rey/VTBMoreTech5Backend/internal/usecase/repo"
-	"github.com/End-rey/VTBMoreTech5Backend/internal/usecase/webapi"
+	"github.com/End-rey/VTBMoreTech5Backend/internal/handler"
+	"github.com/End-rey/VTBMoreTech5Backend/internal/repository"
+	"github.com/End-rey/VTBMoreTech5Backend/internal/service"
 	"github.com/End-rey/VTBMoreTech5Backend/pkg/httpserver"
 	"github.com/End-rey/VTBMoreTech5Backend/pkg/logger"
 	"github.com/End-rey/VTBMoreTech5Backend/pkg/postgres"
@@ -24,22 +21,16 @@ func Run(cfg *config.Config) {
 	l := logger.New(cfg.Log.Level)
 
 	// Repository
-	pg, err := postgres.New(cfg.PG.URL, postgres.MaxPoolSize(cfg.PG.PoolMax))
+	db, err := postgres.New(cfg.PG.URL)
 	if err != nil {
 		l.Fatal(fmt.Errorf("app - Run - postgres.New: %w", err))
 	}
-	defer pg.Close()
-
-	// Use case
-	translationUseCase := usecase.New(
-		repo.New(pg),
-		webapi.New(),
-	)
 
 	// HTTP Server
-	handler := gin.New()
-	v1.NewRouter(handler, l, translationUseCase)
-	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
+	repos := repository.NewRepositories(db)
+	services := service.NewService(repos)
+	handlers := handler.NewHandler(services, l)
+	httpServer := httpserver.New(handlers.NewRouter(), httpserver.Port(cfg.HTTP.Port))
 
 	// Waiting signal
 	interrupt := make(chan os.Signal, 1)

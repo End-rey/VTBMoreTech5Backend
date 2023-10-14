@@ -15,9 +15,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/translation/do-translate": {
-            "post": {
-                "description": "Translate a text",
+        "/api/atms": {
+            "get": {
+                "description": "Show all atms",
                 "consumes": [
                     "application/json"
                 ],
@@ -25,46 +25,29 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "translation"
+                    "atm"
                 ],
-                "summary": "Translate",
-                "operationId": "do-translate",
-                "parameters": [
-                    {
-                        "description": "Set up translation",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/v1.doTranslateRequest"
-                        }
-                    }
-                ],
+                "summary": "all atms",
+                "operationId": "allAtms",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/entity.Translation"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/v1.response"
+                            "$ref": "#/definitions/handler.allAtmsResponce"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/v1.response"
+                            "$ref": "#/definitions/handler.response"
                         }
                     }
                 }
             }
         },
-        "/translation/history": {
+        "/api/offices": {
             "get": {
-                "description": "Show all translation history",
+                "description": "Show all offices",
                 "consumes": [
                     "application/json"
                 ],
@@ -72,21 +55,21 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "translation"
+                    "office"
                 ],
-                "summary": "Show history",
-                "operationId": "history",
+                "summary": "all offices",
+                "operationId": "allOffices",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/v1.historyResponse"
+                            "$ref": "#/definitions/handler.allOfficesResponce"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/v1.response"
+                            "$ref": "#/definitions/handler.response"
                         }
                     }
                 }
@@ -94,61 +77,13 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "entity.Translation": {
-            "type": "object",
-            "properties": {
-                "destination": {
-                    "type": "string",
-                    "example": "en"
-                },
-                "original": {
-                    "type": "string",
-                    "example": "текст для перевода"
-                },
-                "source": {
-                    "type": "string",
-                    "example": "auto"
-                },
-                "translation": {
-                    "type": "string",
-                    "example": "text for translation"
-                }
-            }
+        "handler.allAtmsResponce": {
+            "type": "object"
         },
-        "v1.doTranslateRequest": {
-            "type": "object",
-            "required": [
-                "destination",
-                "original",
-                "source"
-            ],
-            "properties": {
-                "destination": {
-                    "type": "string",
-                    "example": "en"
-                },
-                "original": {
-                    "type": "string",
-                    "example": "текст для перевода"
-                },
-                "source": {
-                    "type": "string",
-                    "example": "auto"
-                }
-            }
+        "handler.allOfficesResponce": {
+            "type": "object"
         },
-        "v1.historyResponse": {
-            "type": "object",
-            "properties": {
-                "history": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/entity.Translation"
-                    }
-                }
-            }
-        },
-        "v1.response": {
+        "handler.response": {
             "type": "object",
             "properties": {
                 "error": {
@@ -166,8 +101,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8080",
 	BasePath:         "/v1",
 	Schemes:          []string{},
-	Title:            "Go Clean Template API",
-	Description:      "Using a translation service as an example",
+	Title:            "VTB MoreTech 5.0",
+	Description:      "The problem of finding an optimal branch of VTB Bank",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
