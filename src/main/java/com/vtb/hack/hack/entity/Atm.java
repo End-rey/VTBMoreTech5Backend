@@ -28,10 +28,10 @@ public class Atm extends BaseEntity {
     private String address;
 
     @Column(nullable = false)
-    private float latitude;
+    private double latitude;
 
     @Column(nullable = false)
-    private float longitude;
+    private double longitude;
 
     @Column(nullable = false)
     private Time workTimeStart;

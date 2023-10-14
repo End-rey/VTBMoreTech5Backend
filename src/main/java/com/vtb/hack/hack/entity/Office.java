@@ -32,10 +32,10 @@ public class Office extends BaseEntity {
 	private String MetroStation;
 
     @Column(nullable = false)
-	private float latitude;
+	private double latitude;
 
     @Column(nullable = false)
-	private float longitude;
+	private double longitude;
     
     @EqualsAndHashCode.Exclude
     @Builder.Default

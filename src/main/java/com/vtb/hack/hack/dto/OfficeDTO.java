@@ -15,8 +15,8 @@ public class OfficeDTO {
     private Long id;
 	private String salePointName;
 	private String address;
-	private Float latitude;
-	private Float longitude;
+	private double latitude;
+	private double longitude;
 	private Boolean status;
 	private String officeType;
 	private String metroStation;

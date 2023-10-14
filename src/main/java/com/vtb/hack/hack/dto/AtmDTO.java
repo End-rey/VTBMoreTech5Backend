@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 public class AtmDTO {
     private Long id;
 	private String address;
-	private float latitude;
-	private float longitude;
+	private double latitude;
+	private double longitude;
 	private Date workTimeStart;
 	private Date workTimeEnd;
 	private Set<ServiceDTO> services;

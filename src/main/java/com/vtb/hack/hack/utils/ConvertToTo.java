@@ -90,13 +90,8 @@ public class ConvertToTo {
                 mapWeekDays.put(chart.getWeeksDay(), new int[24]);
             }
 
-            int ind = (int) chart.getChartsTime().getTime() / 1000 / 60 / 60 % 24 ;
+            int ind = (int) chart.getChartsTime().toLocalTime().getHour();
             mapWeekDays.get(chart.getWeeksDay())[ind] = chart.getChart();
-
-            // int[] tmp = mapWeekDays.get(chart.getWeeksDay());
-            // int ind = chart.getChartsTime().getHours();
-            // tmp[ind] = chart.getChart();
-            // mapWeekDays.put(chart.getWeeksDay(), tmp);
         }
 
         Set<ChartDTO> chartsDTO = new HashSet<>();
