@@ -78,7 +78,7 @@ public class ConvertToTo {
                     .weeksDay(worksTime.getWeeksDay())
                     .workTimeStart(worksTime.getWorkTimeStart())
                     .workTimeEnd(worksTime.getWorkTimeEnd())
-                    .isLegal(worksTime.isIsLegal())
+                    .isLegal(worksTime.getIsLegal())
                     .build();
     }
 

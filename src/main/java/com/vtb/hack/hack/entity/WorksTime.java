@@ -26,7 +26,8 @@ public class WorksTime extends BaseEntity {
 	private Time WorkTimeEnd;
 	private Time LunchTimeStart;
 	private Time LunchTimeEnd;
-	private boolean IsLegal;
+
+	private Boolean IsLegal;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "office_id", nullable = false)
