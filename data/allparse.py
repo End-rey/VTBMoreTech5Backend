@@ -186,13 +186,7 @@ def ServiceParse(cursor):
         conn.commit()   
 
 
-#OfficeParse(cursor)
-#AtmParse(cursor)
-#ServiceParse(cursor)
+OfficeParse(cursor)
+AtmParse(cursor)
+ServiceParse(cursor)
 #timeParsligal(cursor)
-
-cursor.execute("SELECT id FROM offices WHERE id=(select max(id) from offices);")
-now_id = cursor.fetchone()[0]
-
-print(now_id)
-
