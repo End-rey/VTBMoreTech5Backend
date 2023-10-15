@@ -1,11 +1,11 @@
-FROM python:3.9
+# Используем базовый образ с Java
+FROM openjdk:18
 
-WORKDIR /app
+# Копируем JAR-файл с вашим приложением в контейнер
+COPY target/hack-0.0.1-SNAPSHOT.jar /app.jar
 
-COPY /internal/utils/flask.py /app/flask.py
+# Определяем порт, на котором будет работать приложение
+EXPOSE 8080
 
-COPY /internal/utils/Weights/lean /app/Weights/lean
-
-RUN pip install fastapi uvicorn torch numpy pydantic
-
-CMD ["uvicorn", "flask:app", "--reload"]
+# Запускаем приложение при старте контейнера
+CMD ["java", "-jar", "/app.jar"]

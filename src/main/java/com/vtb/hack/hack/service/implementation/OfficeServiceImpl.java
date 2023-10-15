@@ -1,11 +1,8 @@
 package com.vtb.hack.hack.service.implementation;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +19,6 @@ import com.vtb.hack.hack.entity.Office;
 import com.vtb.hack.hack.repository.OfficeRepo;
 import com.vtb.hack.hack.service.OfficeService;
 import com.vtb.hack.hack.utils.ConvertToTo;
-import com.vtb.hack.hack.utils.Predict;
-
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 
@@ -61,24 +56,33 @@ public class OfficeServiceImpl implements OfficeService {
     public Iterable<OfficeDTO> findAllFiltered(OfficeFiltRequestTO officeFiltRequestTO) {
         List<Long> servicesIds = Arrays.stream(officeFiltRequestTO.getServicesIds()).boxed().toList();
 
-        List<Office> filteredOfficesList = officeRepo.findAll().stream()
+        List<Office> filteredOfficesList = officeRepo.findAll();
+        if (officeFiltRequestTO.getServicesIds().length != 0) {
+        filteredOfficesList = filteredOfficesList.stream()
             .filter(office -> office.getServices().stream()
                 .mapToLong(service -> service.getId())
                 .anyMatch(serviceId -> servicesIds.contains(serviceId))
             )
             .collect(Collectors.toList());
+        }
 
         filteredOfficesList.sort(Comparator.comparing(office -> {
             double distanceForA = calculateDistance(
                 new Pos(office.getLongitude(), office.getLatitude()), 
                 new Pos(officeFiltRequestTO.getLongitude(), officeFiltRequestTO.getLatitude())
             );
-            float forA = Predict.optimize(
-                distanceForA,
-                1 / Math.max(0.001, 19 - LocalDateTime.now().getHour()),
-                calculateChartByTime(office.getCharts())
-            );
-            return -forA;
+            // float forA = Predict.optimize(
+            //     distanceForA,
+            //     1 / Math.max(0.001, 19 - LocalDateTime.now().getHour()),
+            //     calculateChartByTime(office.getCharts())
+            // );
+            // return -forA;
+            return distanceForA;
+        }));
+
+        filteredOfficesList.sort(Comparator.comparing(office -> {
+            double chart = calculateChartByTime(office.getCharts());
+            return chart;
         }));
 
         if (officeFiltRequestTO.getLimit() > 0 && filteredOfficesList.size() > officeFiltRequestTO.getLimit()) {
